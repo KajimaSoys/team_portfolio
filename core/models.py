@@ -35,7 +35,7 @@ class Project(models.Model):
     description_ru = models.TextField(verbose_name='Описание полное (рус.)', max_length=5000, blank=True)
     description = models.TextField(verbose_name='Описание (англ.)', max_length=5000, blank=True)
 
-    description_short_ru = models.TextField(verbose_name='Описание полное (рус.)', max_length=2500, blank=True)
+    description_short_ru = models.TextField(verbose_name='Описание короткое (рус.)', max_length=2500, blank=True)
     description_short = models.TextField(verbose_name='Описание (англ.)', max_length=2500, blank=True)
 
     # TODO create get_absolute_url method, to allow route to the project page
