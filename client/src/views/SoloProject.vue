@@ -1,24 +1,37 @@
 <template>
   <div class="project-container">
     <div class="overflow-hidden">
-      <div v-for="project in projects" :key="project.id" class="project">
+      <div class="project">
         <div class="image-container">
           <div class="gradient"> </div>
           <div class="image">
-            <img v-if="project.image_set.length !== 0" :src="'http://127.0.0.1:8000' + project.image_set[0].image">
-            <img class="no-image" v-else src="../../src/assets/images/no-image.jpg">
+            <img v-if="project.image_set.length > 0" :src="'http://127.0.0.1:8000' + project.image_set[0].image" :alt="project.image_set[0].alt">
+            <img class="no-image" v-else src="../../src/assets/images/no-image.jpg" alt="There is no images for this project. Try later..">
           </div>
         </div>
 
         <div class="text-container">
-          <div class="hover-area"> </div>
-          <!-- TODO create links to project personal pages -->
+          <router-link to="/" class="back-container">
+            <button type="button" class="arrow-back">
+            <i class="el-icon">
+              <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="M340.864 149.312a30.592 30.592 0 0 0 0 42.752L652.736 512 340.864 831.872a30.592 30.592 0 0 0 0 42.752 29.12 29.12 0 0 0 41.728 0L714.24 534.336a32 32 0 0 0 0-44.672L382.592 149.376a29.12 29.12 0 0 0-41.728 0z"></path>
+              </svg>
+            </i>
+            </button>
 
-          <router-link :to="{ name: 'projects', params: { id: project.id } }" class="project-link">
-            <h1 class="title">
-              {{project.name}}
-            </h1>
+           <div class="back-link">
+             Назад
+           </div>
           </router-link>
+
+
+          <div class="hover-area"> </div>
+
+            <h1 class="title">
+              {{ project.name_ru }}
+            </h1>
+
 
 
           <p class="description">
@@ -53,11 +66,40 @@
           </div>
         </div>
 
-        <div class="additional-images" v-for="image in project.image_set">
-          <img v-if="image.main === false" :src="'http://127.0.0.1:8000' + image.image">
+        <div class="button-bottom" v-if="project.image_set.length > 1">
+          <button type="button" class="arrow">
+            <i class="el-icon">
+              <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                <path fill="currentColor" d="M340.864 149.312a30.592 30.592 0 0 0 0 42.752L652.736 512 340.864 831.872a30.592 30.592 0 0 0 0 42.752 29.12 29.12 0 0 0 41.728 0L714.24 534.336a32 32 0 0 0 0-44.672L382.592 149.376a29.12 29.12 0 0 0-41.728 0z"></path>
+              </svg>
+            </i>
+          </button>
         </div>
       </div>
     </div>
+    <div class="additional-images" v-for="image in project.image_set.slice(1)">
+      <a :href="'http://127.0.0.1:8000' + image.image" target="_blank">
+        <img :src="'http://127.0.0.1:8000' + image.image" :alt="image.alt">
+      </a>
+    </div>
+
+     <div class="back-button" v-if="project.image_set.length > 1">
+       <router-link to="/">
+          <button type="button" class="arrow-back">
+          <i class="el-icon">
+            <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor" d="M340.864 149.312a30.592 30.592 0 0 0 0 42.752L652.736 512 340.864 831.872a30.592 30.592 0 0 0 0 42.752 29.12 29.12 0 0 0 41.728 0L714.24 534.336a32 32 0 0 0 0-44.672L382.592 149.376a29.12 29.12 0 0 0-41.728 0z"></path>
+            </svg>
+          </i>
+          </button>
+
+         <div class="back-link">
+           Вернуться
+         </div>
+       </router-link>
+     </div>
+
+
   </div>
 
 </template>
@@ -69,21 +111,28 @@ export default {
   name: "SoloProject.vue",
   data(){
     return {
-      projects: []
+      projects: [],
+      project: {
+        image_set: [],
+        group: {
+          name: ''
+        }
+      }
+
     }
   },
-  mounted() {
+
+  created() {
     this.get_projects()
   },
 
   methods: {
     async get_projects(){
       await axios
-        .get('api/v1/projects/')
+        .get(`api/v1/projects/${this.$route.params.id}/`)
         .then(response => {
-          this.projects = response.data
-          console.log(this.projects)
-          // console.log(this.projects.length)
+          this.project = response.data
+          console.log(this.project)
         })
         .catch(error => {
           console.log('Ошибка при загрузке проектов')
@@ -106,7 +155,7 @@ export default {
 }
 
 .overflow-hidden{
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
 }
 
@@ -157,6 +206,27 @@ export default {
   height: auto!important;
 }
 
+.back-container{
+  position: absolute;
+  display: flex;
+  max-width: 80rem;
+  margin: 0 2rem;
+  top: -500px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
+}
+
+.back-container > .back-link{
+  margin-right: 15px;
+  color: white;
+}
+
+.back-container > .arrow-back{
+  color: white;
+  background-color: transparent;
+}
+
 
 .hover-area {
     background-color: transparent;
@@ -177,15 +247,7 @@ export default {
 }
 
 .text-container:hover .title {
-  transform: translateY(-200%);
-}
-
-.text-container:hover .description {
-  opacity: 1;
-}
-
-.text-container:hover .additional {
-  transform: translateY(75%);
+  transform: translateY(-150%);
 }
 
 .title {
@@ -195,6 +257,7 @@ export default {
   font-style: normal;
   font-weight: bold;
   margin: 0 2rem;
+  transform: translateY(-150%);
 }
 
 .project-link {
@@ -204,18 +267,19 @@ export default {
   z-index: 105;
 }
 
-.title, .additional {
-  transition: all 0.3s ease-in-out;
+.navbar_social-link {
+  color: white;
 }
+
 
 .description {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   margin: 0 2rem;
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-  transform: translateY(-50%);
+  opacity: 1;
+
+  transform: translateY(0%);
   max-width: 60%;
-  /*margin-bottom: -50px;*/
+
 }
 
 .additional {
@@ -225,6 +289,7 @@ export default {
   justify-content: space-between;
   position: inherit;
   z-index: 110;
+  transform: translateY(75%)
 }
 
 .project-icons{
@@ -233,6 +298,167 @@ export default {
 
 .groups {
   padding-bottom: 0.8rem;
+}
+
+.button-bottom{
+  position: absolute;
+  bottom: 7%;
+  left: 50%;
+  right: 50%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.arrow {
+  border-radius: 50%;
+  background-color: rgb(255,255,255, 0.1);
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+
+  animation-name: bounce;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  cursor: default;
+}
+
+@keyframes bounce {
+  0% {
+    top: 0;
+  }
+  50% {
+    top: 50px;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+.el-icon {
+  transform: rotate(90deg)
+}
+
+.additional-images {
+  background-color: rgb(255 250 245);
+}
+
+.additional-images img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  padding: 5vw;
+}
+
+.back-button{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 5vw 5vw 5vw;
+  text-align: center;
+  background-color: rgb(255 250 245);
+}
+
+.back-button > a{
+  display: flex;
+}
+
+.arrow-back {
+  border-radius: 50%;
+  background-color: rgb(255,255,255, 0.1);
+  color: #000000;
+  text-align: center;
+  font-size: 1rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.arrow-back > .el-icon{
+  transform: rotate(180deg);
+}
+
+.back-button > a:hover .arrow-back{
+  color: #ff5e29;
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: translateX(-10px);
+}
+
+.back-button > a:hover .back-link{
+  color: #ff5e29;
+}
+
+.back-link {
+  padding: 0.5rem 0rem;
+  transition: color 0.2s ease-in-out;
+  color: black;
+  font-family: Montserrat, 'sans-serif';
+  font-size: 20px;
+}
+
+a:link {
+      text-decoration: none;
+}
+
+a:visited {
+      text-decoration: none;
+}
+
+a:hover {
+      text-decoration: none;
+}
+
+a:active {
+      text-decoration: none;
+}
+
+@media screen and (max-width: 767px) {
+  .text-container {
+    top: 30%;
+  }
+
+  .text-container:hover .title {
+    transform: translateY(0%);
+  }
+
+  .text-container:hover .additional {
+    transform: translateY(-120%);
+  }
+
+  .title {
+    transform: translateY(0%);
+    margin-bottom: 3rem;
+  }
+
+  .back-container {
+    top: -150px;
+    z-index: 200;
+  }
+
+  .description {
+    transform: translateY(-25%);
+    max-width: 100%;
+  }
+
+  .additional {
+    transform: translateY(-120%);
+  }
+
+  .gradient {
+    top: 0;
+  }
 }
 
 </style>

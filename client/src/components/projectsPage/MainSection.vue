@@ -16,7 +16,7 @@
 
           <router-link :to="{ name: 'projects', params: { id: project.id } }" class="project-link">
             <h1 class="title">
-              {{project.name}}
+              {{project.name_ru}}
             </h1>
           </router-link>
 
@@ -200,6 +200,15 @@ export default {
   z-index: 105;
 }
 
+.navbar_social-link {
+  color: #dadada;
+  transition: color 0.2s ease-out;
+}
+
+.navbar_social-link:hover {
+  color: white;
+}
+
 .title, .additional {
   transition: all 0.3s ease-in-out;
 }
@@ -229,6 +238,49 @@ export default {
 
 .groups {
   padding-bottom: 0.8rem;
+}
+
+@media screen and (max-width: 991px) {
+  .text-container {
+    top: 65%;
+  }
+
+  .title {
+    transform: translateY(-200%);
+  }
+
+  .description {
+    opacity: 1;
+    max-width: 100%;
+  }
+
+  .additional {
+    transform: translateY(75%);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .text-container {
+    top: 60%;
+  }
+
+  .text-container:hover .title {
+    transform: translateY(0%);
+  }
+
+  .title {
+    transform: translateY(0%);
+    padding-bottom: 5rem;
+  }
+
+  .text-container:hover .additional {
+    transform: translateY(0%);
+  }
+
+  .additional {
+    transform: translateY(0%);
+    padding-top: 1rem;
+  }
 }
 
 </style>

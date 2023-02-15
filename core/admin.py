@@ -30,7 +30,7 @@ class ProjectImagesAdmin(admin.ModelAdmin):
 
 class ProjectImagesInline(admin.StackedInline):
     model = ProjectImages
-    fields = ('image', 'main', 'image_tag', )
+    fields = ('image', 'main', 'alt','image_tag', )
     readonly_fields = ('image_tag', )
     extra = 0
 
@@ -42,6 +42,9 @@ class GroupAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('name', 'group', 'isActive')
+    list_display = ('name_ru', 'group', 'isActive')
+
+
+
 
     inlines = (ProjectImagesInline,)

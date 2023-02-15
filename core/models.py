@@ -47,7 +47,7 @@ class Project(models.Model):
     isActive = models.BooleanField(verbose_name='Активен?', default=True)
 
     def __str__(self):
-        return self.name
+        return self.name_ru
 
     def save(self, *args, **kwargs):
         if self.pk is None:
@@ -62,7 +62,7 @@ class Project(models.Model):
 
 
 class ProjectImages(models.Model):
-    project = models.ForeignKey(to=Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(to=Project, on_delete=models.CASCADE, verbose_name='Проект')
     main = models.BooleanField(verbose_name='Главное изображение?', default=False)
     alt = models.CharField(verbose_name='Альтернативный текст', max_length=500, blank=True)
 
