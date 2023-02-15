@@ -9,7 +9,7 @@ import SmoothScroll from 'smoothscroll-for-websites'
 
 import './assets/main.css'
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000'
+axios.defaults.baseURL = 'https://kajimacode.com'
 
 const app = createApp(App)
 

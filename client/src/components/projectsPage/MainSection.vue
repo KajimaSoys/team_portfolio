@@ -5,8 +5,8 @@
         <div class="image-container">
           <div class="gradient"> </div>
           <div class="image">
-            <img v-if="project.image_set.length !== 0" :src="'http://127.0.0.1:8000' + project.image_set[0].image">
-            <img class="no-image" v-else src="src/assets/images/no-image.jpg">
+            <img v-if="project.image_set.length !== 0" :src="`${this.backendUrl}` + project.image_set[0].image">
+            <img class="no-image" v-else src="@/assets/images/no-image.jpg">
           </div>
         </div>
 
@@ -67,7 +67,8 @@ export default {
   name: "MainSection.vue",
   data(){
     return {
-      projects: []
+      projects: [],
+      backendUrl: 'https://kajimacode.com'
     }
   },
   mounted() {

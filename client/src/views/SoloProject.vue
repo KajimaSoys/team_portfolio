@@ -5,7 +5,7 @@
         <div class="image-container">
           <div class="gradient"> </div>
           <div class="image">
-            <img v-if="project.image_set.length > 0" :src="'http://127.0.0.1:8000' + project.image_set[0].image" :alt="project.image_set[0].alt">
+            <img v-if="project.image_set.length > 0" :src="`${this.backendUrl}` + project.image_set[0].image" :alt="project.image_set[0].alt">
             <img class="no-image" v-else src="../../src/assets/images/no-image.jpg" alt="There is no images for this project. Try later..">
           </div>
         </div>
@@ -78,8 +78,8 @@
       </div>
     </div>
     <div class="additional-images" v-for="image in project.image_set.slice(1)">
-      <a :href="'http://127.0.0.1:8000' + image.image" target="_blank">
-        <img :src="'http://127.0.0.1:8000' + image.image" :alt="image.alt">
+      <a :href="`${this.backendUrl}` + image.image" target="_blank">
+        <img :src="`${this.backendUrl}` + image.image" :alt="image.alt">
       </a>
     </div>
 
@@ -111,6 +111,7 @@ export default {
   name: "SoloProject.vue",
   data(){
     return {
+      backendUrl: 'https://kajimacode.com',
       projects: [],
       project: {
         image_set: [],

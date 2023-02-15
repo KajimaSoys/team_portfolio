@@ -38,7 +38,6 @@ class Project(models.Model):
     description_short_ru = models.TextField(verbose_name='Описание короткое (рус.)', max_length=2500, blank=True)
     description_short = models.TextField(verbose_name='Описание (англ.)', max_length=2500, blank=True)
 
-    # TODO create get_absolute_url method, to allow route to the project page
 
     link = models.URLField(verbose_name='Ссылка на проект', blank=True)
     git = models.URLField(verbose_name='Ссылка на гит', blank=True)
@@ -68,7 +67,7 @@ class ProjectImages(models.Model):
 
     def get_upload_path(self, filename):
         path = Project.objects.get(id=self.project_id).path
-        return f'media/{path}/{filename}'
+        return f'{path}/{filename}'
 
     image = models.ImageField(verbose_name='Изображение проекта', blank=True, upload_to=get_upload_path, max_length=500)
 
