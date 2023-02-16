@@ -27,7 +27,7 @@
 
           <div class="additional">
             <div class="groups">
-              {{project.group.name}}
+              {{project.get_group}}
             </div>
 
             <div class="links">

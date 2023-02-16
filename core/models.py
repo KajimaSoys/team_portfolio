@@ -27,7 +27,7 @@ class Project(models.Model):
         verbose_name_plural = 'Проекты'
 
     id = models.BigAutoField(verbose_name='Идентификатор', primary_key=True)
-    group = models.ForeignKey(verbose_name='Группа', to=Group, on_delete=models.CASCADE)
+    group = models.ManyToManyField(verbose_name='Группа', to=Group)
 
     name_ru = models.CharField(verbose_name='Название проекта (рус.)', max_length=250)
     name = models.CharField(verbose_name='Название проекта (англ.)', max_length=250, blank=True)
@@ -58,6 +58,12 @@ class Project(models.Model):
                 pass
             self.path = f'projects/{path}'
         super(Project, self).save(*args, **kwargs)
+
+
+    def get_group(self):
+        return ', '.join(group.name for group in self.group.all())
+
+    get_group.short_description = 'Группы'
 
 
 class ProjectImages(models.Model):

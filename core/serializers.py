@@ -16,7 +16,7 @@ class CoreImageSerializer(serializers.ModelSerializer):
 
 class ProjectGroupSerializer(serializers.ModelSerializer):
     image_set = serializers.SerializerMethodField()
-    group = CoreGroupSerializer()
+    # group = Project.get_group(self)
 
     def get_image_set(self, obj):
         queryset = ProjectImages.objects.filter(project=obj).prefetch_related().order_by('-main')
@@ -35,7 +35,7 @@ class ProjectGroupSerializer(serializers.ModelSerializer):
                   'image_set',
                   'link',
                   'git',
-                  'group')
+                  'get_group')
 
 
 
