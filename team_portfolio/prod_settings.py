@@ -18,7 +18,7 @@ DATABASES = {
     }
 }
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 CSRF_COOKIE_SECURE = (os.environ.get('TEAM_PORTFOLIO_CSRF_COOKIE_SECURE', False) == 'True')
 SESSION_COOKIE_SECURE = (os.environ.get('TEAM_PORTFOLIO_SESSION_COOKIE_SECURE', False) == 'True')
