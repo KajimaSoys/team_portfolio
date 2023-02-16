@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-DEBUG = os.environ.get('TEAM_PORTFOLIO_DEBUG')
+DEBUG = (os.environ.get('TEAM_PORTFOLIO_DEBUG') == 'True')
 ALLOWED_HOSTS = os.environ.get('TEAM_PORTFOLIO_ALLOWED_HOSTS', '127.0.0.1').split(',')
 
 SECRET_KEY = os.environ.get('TEAM_PORTFOLIO_SECRET_KEY')
@@ -20,5 +20,5 @@ DATABASES = {
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-CSRF_COOKIE_SECURE = os.environ.get('TEAM_PORTFOLIO_CSRF_COOKIE_SECURE', False)
-SESSION_COOKIE_SECURE = os.environ.get('TEAM_PORTFOLIO_SESSION_COOKIE_SECURE', False)
+CSRF_COOKIE_SECURE = (os.environ.get('TEAM_PORTFOLIO_CSRF_COOKIE_SECURE', False) == 'True')
+SESSION_COOKIE_SECURE = (os.environ.get('TEAM_PORTFOLIO_SESSION_COOKIE_SECURE', False) == 'True')
