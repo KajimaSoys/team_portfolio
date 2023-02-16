@@ -58,6 +58,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080"
 ]
 
+CSRF_TRUSTED_ORIGINS = ["https://kajimacode.com"]
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
