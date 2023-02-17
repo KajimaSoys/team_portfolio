@@ -27,7 +27,7 @@ class Project(models.Model):
         verbose_name_plural = 'Проекты'
 
     id = models.BigAutoField(verbose_name='Идентификатор', primary_key=True)
-    group = models.ManyToManyField(verbose_name='Группа', to=Group)
+    group = models.ManyToManyField(verbose_name='Группа', to=Group, blank=True)
 
     name_ru = models.CharField(verbose_name='Название проекта (рус.)', max_length=250)
     name = models.CharField(verbose_name='Название проекта (англ.)', max_length=250, blank=True)
