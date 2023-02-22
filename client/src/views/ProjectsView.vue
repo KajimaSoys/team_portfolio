@@ -1,8 +1,5 @@
 <template>
-
   <MainSection/>
-
-
 </template>
 
 <script>
@@ -18,13 +15,11 @@ export default {
 </script>
 
 <style scoped>
-
-  footer {
-    margin-top: 100vh;
-  }
-
+ footer {
+     margin-top: 100vh;
+}
  .navbar07_component{
-    background-color: transparent;
-    backdrop-filter: blur(4px) brightness(50%);
-  }
+     background-color: transparent;
+     backdrop-filter: blur(4px) brightness(50%);
+}
 </style>

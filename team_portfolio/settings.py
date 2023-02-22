@@ -55,7 +55,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080"
+    "http://localhost:8080",# from nginx in prod
 ]
 
 CSRF_TRUSTED_ORIGINS = ["https://kajimacode.com"]
